@@ -46,7 +46,7 @@ def exponential_smoothing (series, alpha):
 
 def double_exponential_smoothing (series, alpha, gamma):
     """
-    Smooths a time series via double exponential moving average method. In this
+    Smooths a time series via double exponential smoothing method. In this
     method, previous observations are assigned exponentially decreasing
     weights. This method is better at following trends in data than single
     exponential smoothing.
@@ -68,4 +68,32 @@ def double_exponential_smoothing (series, alpha, gamma):
         double_smoothed.append(double_smooth)
 
     return smoothed_series
+
+
+def lasp_forecast (series, alpha, gamma, periods):
+    """
+    Forecasts a time series via double exponential smoothing method, aka LASP.
+    Inputs:
+        series - time series to smooth
+        alpha - smoothing constant; 0 < alpha ≤ 1
+        gamma - second smoothing constant; 0 < gamma ≤ 1
+        periods - number of time periods to forecast
+    """
+
+    forecast_series = [series[-1]]
+    smoothed_series = [series[0]]               # initialize with S1 = y1
+    double_smoothed = [series[1] - series[0]]   # initialize with b1 = y2 - y1
+    # can also be initialized by other methods
+
+    for i in xrange(1, len(series)):
+        smoothed = alpha * series[i] + (1 - alpha) * (smoothed_series[-1] + double_smoothed[-1])
+        double_smooth = gamma * (smoothed - smoothed_series[-1]) + (1 - gamma) * double_smoothed[-1]
+        smoothed_series.append(smoothed)
+        double_smoothed.append(double_smooth)
+
+    for i in xrange(periods):
+        forecast = forecast_series[-1] + double_smoothed[-1]
+        forecast_series.append(forecast)
+
+    return forecast_series[1:]
 
