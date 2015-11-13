@@ -31,7 +31,7 @@ def exponential_smoothing (series, alpha):
     weights.
     Inputs:
         series - time series to smooth
-        alpha - smoothing constant; 0 < alpha ≤ 1
+        alpha - smoothing constant; 0 < alpha <= 1
     """
 
     smoothed_series = [np.NaN]          # there is no S1
@@ -52,8 +52,8 @@ def double_exponential_smoothing (series, alpha, gamma):
     exponential smoothing.
     Inputs:
         series - time series to smooth
-        alpha - smoothing constant; 0 < alpha ≤ 1
-        gamma - second smoothing constant; 0 < gamma ≤ 1
+        alpha - smoothing constant; 0 < alpha <= 1
+        gamma - second smoothing constant; 0 < gamma <= 1
     """
 
     smoothed_series = [series[0]]               # initialize with S1 = y1
@@ -75,8 +75,8 @@ def lasp_forecast (series, alpha, gamma, periods):
     Forecasts a time series via double exponential smoothing method, aka LASP.
     Inputs:
         series - time series to smooth
-        alpha - smoothing constant; 0 < alpha ≤ 1
-        gamma - second smoothing constant; 0 < gamma ≤ 1
+        alpha - smoothing constant; 0 < alpha <= 1
+        gamma - second smoothing constant; 0 < gamma <= 1
         periods - number of time periods to forecast
     """
 
